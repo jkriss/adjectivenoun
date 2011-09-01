@@ -25,8 +25,13 @@ def load_words(filename)
   by_letter
 end
 
-def seed_string(some_string)
-  srand some_string.hash
+
+def phrase(seed_string=nil)
+  if seed_string && seed_string != ""
+    srand seed_string.hash
+  end
+  letter = ADJECTIVES.keys[rand 26]
+  "#{ADJECTIVES[letter].rand.capitalize} #{NOUNS[letter].rand.capitalize}"
 end
 
 configure do
@@ -34,12 +39,18 @@ configure do
   NOUNS = load_words 'words/2syllablenouns.txt'
 end
 
-get '/*' do
-  if params[:splat] != [""]
-    puts "seeding with #{params[:splat].inspect}"
-    seed_string params[:splat]
-  end
-  letter = ADJECTIVES.keys[rand 26]
-  "#{ADJECTIVES[letter].rand.capitalize} #{NOUNS[letter].rand.capitalize}"
+get '/' do
+  @phrase = phrase
+  haml :fancy_word
 end
 
+get '/:seed.txt' do
+  @phrase = phrase(params['seed'])
+  content_type :text
+  @phrase
+end
+
+get '/:seed' do
+  @phrase = phrase(params['seed'])
+  haml :fancy_word
+end
