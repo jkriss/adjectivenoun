@@ -1,12 +1,18 @@
 # word lists from http://www.ashley-bovan.co.uk/words/partsofspeech.html
 
+require 'rubygems'
+require 'bundler'
+Bundler.setup
+require 'sinatra'
+require 'haml'
+
 class Array
   def rand
     self[Kernel.rand(length)]
   end
 end
 
-def load(filename)
+def load_words(filename)
   list = File.read(filename).split("\n")
   by_letter = {}
   list.each do |word|
@@ -23,10 +29,17 @@ def seed_string(some_string)
   srand some_string.hash
 end
 
-adjectives = load 'words/2syllableadjectives.txt'
-nouns = load 'words/2syllablenouns.txt'
+configure do
+  ADJECTIVES = load_words 'words/2syllableadjectives.txt'
+  NOUNS = load_words 'words/2syllablenouns.txt'
+end
 
-# seed_string = "835164712f0a23dd77d55c2aea553ca56412f083"
+get '/*' do
+  if params[:splat] != [""]
+    puts "seeding with #{params[:splat].inspect}"
+    seed_string params[:splat]
+  end
+  letter = ADJECTIVES.keys[rand 26]
+  "#{ADJECTIVES[letter].rand.capitalize} #{NOUNS[letter].rand.capitalize}"
+end
 
-letter = adjectives.keys[rand 26]
-puts "#{adjectives[letter].rand.capitalize} #{nouns[letter].rand.capitalize}"
