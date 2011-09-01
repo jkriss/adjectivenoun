@@ -30,11 +30,12 @@ def phrase(seed_string=nil)
   if seed_string && seed_string != ""
     srand seed_string.hash
   end
-  letter = ADJECTIVES.keys[rand 26]
+  letter = LETTERS.rand
   "#{ADJECTIVES[letter].rand.capitalize} #{NOUNS[letter].rand.capitalize}"
 end
 
 configure do
+  LETTERS = ('a'..'z').to_a
   ADJECTIVES = load_words 'words/2syllableadjectives.txt'
   NOUNS = load_words 'words/2syllablenouns.txt'
 end
