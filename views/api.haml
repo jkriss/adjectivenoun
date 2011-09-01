@@ -1,0 +1,116 @@
+!!!
+%html
+
+  %head
+    %title adjectivenoun.me
+    :css
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body, html {
+        font-family: Courier, fixed-width;
+        background: #111;
+        text-align: center;
+      }
+
+      a {
+        color: #ddd;
+      }
+
+      #docs {
+        margin: 100px auto;
+        display: inline-block;
+        color: #ccc;
+        text-align: left;
+        width: 500px;
+        font-size: 10pt;
+        line-height: 1.3em;
+      }
+
+      .example {
+        font-size: 0.85em;
+        background: #191919;
+        color: #eee;
+        padding: 10px;
+        margin: 10px 0;
+        margin-bottom: 3em;
+      }
+
+      .example a {
+        color: #ccc;
+        text-decoration: none;
+        border-bottom: 1px solid #444;
+      }
+
+      #footer {
+        position: absolute;
+        bottom: 0;
+        background: #191919;
+        color: #999;
+        width: 100%;
+        text-align: left;
+        font-size: 0.7em;
+      }
+
+      #footer a {
+        color: #ddd;
+        text-decoration: none;
+      }
+
+      #jklabs, #api {
+        padding: 10px;
+        display: inline-block;
+      }
+      
+      #api {
+        float: right;
+      }    
+
+          
+  %body
+  
+    #docs
+    
+      If you'd like to use adjectivenoun.me to automatically generate consistent names, 
+      just add any string to the path. For instance, you could use a git commit hash:
+      
+      .example
+        %a{ :href => "/da516e8f544c591bbebbfd8461c60e31ecc76d22" } http://#{request.host}/da516e8f544c591bbebbfd8461c60e31ecc76d22
+        
+      If you're using it in code, the plain text version will make your life easier:
+      
+      .example
+        %a{ :href => "/da516e8f544c591bbebbfd8461c60e31ecc76d22.txt" } http://#{request.host}/da516e8f544c591bbebbfd8461c60e31ecc76d22.txt
+        
+      For instance, if you're hosting an application on
+      %a{ :href => "http://heroku.com" } Heroku
+      you can do the following:
+      
+      .example
+        require 'open-uri'
+        %br/
+        %br/
+        begin
+        %br/
+        &nbsp;&nbsp;url = "http://#{request.host}/\#{ENV['COMMIT_HASH']}.txt"
+        %br/
+        &nbsp;&nbsp;RELEASE_NAME = open(url).read
+        %br/
+        rescue
+        %br/
+        &nbsp;&nbsp;# in case something goes wrong
+        %br/
+        &nbsp;&nbsp;RELEASE_NAME = ENV['COMMIT_HASH']
+        %br/
+        end
+
+
+    #footer
+      #jklabs
+        A
+        %a{ :href => 'http://jklabs.net' } jklabs
+        production
+      #api
+        %a{ :href => '/' } home

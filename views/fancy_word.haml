@@ -10,18 +10,50 @@
       }
 
       body, html {
+        font-family: Courier, fixed-width;
         background: #111;
         text-align: center;
       }
 
       #phrase {
-        font-family: Courier, fixed-width;
         font-size: 3em;
         margin: 100px auto;
         display: inline-block;
         color: #ccc;
       }
-    
+      
+      #footer {
+        position: absolute;
+        bottom: 0;
+        background: #191919;
+        color: #999;
+        width: 100%;
+        text-align: left;
+        font-size: 0.7em;
+      }
+
+      #footer a {
+        color: #ddd;
+        text-decoration: none;
+      }
+
+      #jklabs, #api {
+        padding: 10px;
+        display: inline-block;
+      }
+
+      #api {
+        float: right;
+      }    
+      
   %body
   
     #phrase= @phrase
+    
+    #footer
+      #jklabs
+        A
+        %a{ :href => 'http://jklabs.net' } jklabs
+        production
+      #api
+        %a{ :href => '/api' } api

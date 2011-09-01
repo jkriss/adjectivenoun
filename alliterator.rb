@@ -44,6 +44,10 @@ get '/' do
   haml :fancy_word
 end
 
+get '/api' do
+  haml :api
+end
+
 get '/:seed.txt' do
   @phrase = phrase(params['seed'])
   content_type :text
