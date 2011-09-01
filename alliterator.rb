@@ -40,7 +40,7 @@ configure do
 end
 
 get '/' do
-  @phrase = phrase
+  @phrase = phrase(Time.now.to_f)
   haml :fancy_word
 end
 
